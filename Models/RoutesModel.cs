@@ -2,15 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static TablesAPI.Models.CoordinatesModel;
 
 namespace TablesAPI.Models
 {
-        public class Coordinates 
-        {
-            public int Id { get; set; }
-            public double Latitude { get; set; }
-            public double Longitude { get; set; }
-        }
+
+        
     public class RoutesModel
     {
 
