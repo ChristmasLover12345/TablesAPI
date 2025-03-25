@@ -54,6 +54,30 @@ namespace TablesAPI.Controllers
             return BadRequest(new {Message = "Post creation was no successful"});
 
         }
+        
+        [HttpPost("AddLike")]
+        public async Task<IActionResult> AddLikes([FromBody] LikesModel like)
+        {
+
+            var success = await _rideTablesService.AddLike(like);
+
+            if(success) return Ok(new {Success = true});
+
+            return BadRequest(new {Message = "The like was not given"});
+
+        }
+
+        [HttpPost("AddComment")]
+        public async Task<IActionResult> AddComment([FromBody] CommentsModel comment)
+        {
+
+            var success = await _rideTablesService.AddComment(comment);
+
+            if(success) return Ok(new {Success = true});
+
+            return BadRequest(new {Message = "The like was not given"});
+
+        }
 
     }
 }

@@ -17,6 +17,8 @@ namespace TablesAPI.Context
         public DbSet<UserProfileModel> UserProfile { get; set; }
         public DbSet<GalleryPostModel> GalleryPosts { get; set; }
         public DbSet<RoutesModel> Routes { get; set; }
+        public DbSet<LikesModel> Likes {get; set;}
+        public DbSet<CommentsModel> Comments { get; set;}
         
 
     }
