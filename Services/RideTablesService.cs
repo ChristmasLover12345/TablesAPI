@@ -33,6 +33,44 @@ namespace TablesAPI.Services
             return await _dataContext.SaveChangesAsync() !=0;
         }
 
+        public async Task<bool> PrivateRoute(int id)
+        {
+            var route = await _dataContext.Routes.FirstOrDefaultAsync(route => route.Id == id);
+
+
+            if(route == null)
+            {
+                return false;
+            }
+
+            if(route.IsPrivate == true)
+            {
+                route.IsPrivate = false;
+            }
+            else
+            {
+                route.IsPrivate = true;
+            }
+
+            _dataContext.Routes.Update(route);
+            return await _dataContext.SaveChangesAsync() != 0;
+        }
+
+
+        public async Task<bool> RemoveRoute(int id)
+        {
+            var route = await _dataContext.Routes.FirstOrDefaultAsync(route => route.Id == id);
+
+            if(route == null) return false;
+
+            route.IsDeleted = true;
+
+            _dataContext.Routes.Update(route);
+             return await _dataContext.SaveChangesAsync() != 0;
+
+        }
+
+
         public async Task<bool> AddLike(LikesModel like)
         {
             await _dataContext.Likes.AddAsync(like);

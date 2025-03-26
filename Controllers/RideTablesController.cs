@@ -97,6 +97,27 @@ namespace TablesAPI.Controllers
             return BadRequest(new {Message = "Route creation was not successful"});
         }
 
+        [HttpPost("PrivateRoute/{id}")]
+        public async Task<IActionResult> PrivateRoute(int id)
+        {
+             var success = await _rideTablesService.PrivateRoute(id); 
+
+            if(success) return Ok(new {Success = true});
+
+            return BadRequest(new {Message = "No route found"});
+        }
+
+         [HttpDelete("RemoveRoute/{id}")]
+        public async Task<IActionResult> RemoveLike(int id)
+        {
+            var success = await _rideTablesService.RemoveRoute(id);
+
+            if(success) return Ok(new {Success = true});
+
+            return BadRequest(new {Message = "no route to be removed was found"});
+
+        }
+
         
         [HttpPost("AddLike")]
         public async Task<IActionResult> AddLikes([FromBody] LikesModel like)
