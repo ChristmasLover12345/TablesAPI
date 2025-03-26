@@ -32,6 +32,16 @@ namespace TablesAPI.Controllers
             return BadRequest(new {Message = "The gallery is empty.."});
 
         }
+        
+        [HttpPost("EditPost")]
+        public async Task<IActionResult> EditGalleryPost([FromBody] GalleryPostModel post)
+        {
+            var success = await _rideTablesService.EditGalleryPost(post);
+
+            if(success) return Ok(new {Success = true});
+
+            return BadRequest(new {Message = "No post found"});
+        }
 
         [HttpGet("GetRoutes")]
         public async Task<IActionResult> GetAllRoutes()
@@ -100,6 +110,17 @@ namespace TablesAPI.Controllers
 
         }
 
+        [HttpDelete("RemoveLike/{userId}/{postId}")]
+        public async Task<IActionResult> RemoveLike(int userId, int postId)
+        {
+            var success = await _rideTablesService.RemoveLike(userId, postId);
+
+            if(success) return Ok(new {Success = true});
+
+            return BadRequest(new {Message = "no like to be removed was found"});
+
+        }
+
         [HttpPost("AddComment")]
         public async Task<IActionResult> AddComment([FromBody] CommentsModel comment)
         {
@@ -108,9 +129,22 @@ namespace TablesAPI.Controllers
 
             if(success) return Ok(new {Success = true});
 
-            return BadRequest(new {Message = "The like was not given"});
+            return BadRequest(new {Message = "The comments was not submited"});
 
         }
+
+          [HttpDelete("RemoveComment/{commentId}/{userId}")]
+        public async Task<IActionResult> RemoveComment(int commentId, int userId)
+        {
+            var success = await _rideTablesService.RemoveComment(commentId, userId);
+
+            if(success) return Ok(new {Success = true});
+
+            return BadRequest(new {Message = "no comment to be removed was found"});
+
+        }
+
+
 
     }
 }

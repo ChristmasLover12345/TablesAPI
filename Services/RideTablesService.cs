@@ -68,5 +68,38 @@ namespace TablesAPI.Services
         public async Task<List<LikesModel>> GetLikes(int postId) => await _dataContext.Likes.Where(like => like.PostId == postId).ToListAsync();
         public async Task<List<CommentsModel>> GetComments(int postId) => await _dataContext.Comments.Where(comment => comment.PostId == postId).ToListAsync();
 
+
+        public async Task<bool> RemoveLike(int userId, int postId)
+        {
+            var like = await _dataContext.Likes.FirstOrDefaultAsync(like => like.UserId == userId && like.PostId == postId);
+
+            if (like == null)
+            {
+                return false; 
+            }
+
+            like.IsDeleted = true;
+
+            _dataContext.Likes.Update(like);
+            return await _dataContext.SaveChangesAsync() != 0;
+        }
+
+        public async Task<bool> RemoveComment(int commentId, int userId)
+        {
+            var comment = await _dataContext.Comments.FirstOrDefaultAsync(coment => coment.Id == commentId && coment.UserId == userId);
+
+            if (comment == null)
+            {
+                return false; // Comment not found or does not belong to the user
+            }
+
+            comment.IsDeleted = true;
+
+            _dataContext.Comments.Update(comment);
+            return await _dataContext.SaveChangesAsync() != 0;
+        }
+
+
+
     }
 }

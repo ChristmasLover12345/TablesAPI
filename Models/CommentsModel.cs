@@ -12,6 +12,7 @@ namespace TablesAPI.Models
         public int PostId { get; set; }
         public string? CommentText { get; set; }
         public string? CreatedAt { get; set; }
+        public bool IsDeleted { get; set; }
         public List<LikesModel>? Likes { get; set; }
     }
 }
