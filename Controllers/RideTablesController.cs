@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TablesAPI.Models;
 using TablesAPI.Services;
@@ -10,6 +11,7 @@ namespace TablesAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    // [Authorize]
     public class RideTablesController : ControllerBase
     {
         
@@ -43,6 +45,26 @@ namespace TablesAPI.Controllers
 
         }
 
+        [HttpGet("GetLikes/{id}")]
+        public async Task<IActionResult> GetLikes(int id)
+        {
+            var likes = await _rideTablesService.GetLikes(id);
+
+            if(likes != null) return Ok(likes);
+
+            return BadRequest(new {Message = "No likes"});
+        }
+
+         [HttpGet("GetComments/{id}")]
+        public async Task<IActionResult> GetComments(int id)
+        {
+            var Comments = await _rideTablesService.GetComments(id);
+
+            if(Comments != null) return Ok(Comments);
+
+            return BadRequest(new {Message = "No comments"});
+        }
+
         [HttpPost("AddGalleryPost")]
         public async Task<IActionResult> AddGalleryPost([FromBody] GalleryPostModel post)
         {
@@ -51,9 +73,20 @@ namespace TablesAPI.Controllers
 
             if(success) return Ok(new {Success = true});
 
-            return BadRequest(new {Message = "Post creation was no successful"});
+            return BadRequest(new {Message = "Post creation was not successful"});
 
         }
+
+        [HttpPost("AddRoute")]
+        public async Task<IActionResult> AddRoute([FromBody] RoutesModel route)
+        {
+             var success = await _rideTablesService.AddRoute(route); 
+
+            if(success) return Ok(new {Success = true});
+
+            return BadRequest(new {Message = "Route creation was not successful"});
+        }
+
         
         [HttpPost("AddLike")]
         public async Task<IActionResult> AddLikes([FromBody] LikesModel like)

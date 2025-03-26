@@ -65,8 +65,8 @@ namespace TablesAPI.Services
         }
 
         private async Task<GalleryPostModel> GetGalleryPostById(int Id) => await _dataContext.GalleryPosts.FindAsync(Id);
-        private async Task<List<LikesModel>> GetLikes(int postId) => await _dataContext.Likes.Where(like => like.PostId == postId).ToListAsync();
-        private async Task<List<CommentsModel>> GetComments(int postId) => await _dataContext.Comments.Where(comment => comment.PostId == postId).ToListAsync();
+        public async Task<List<LikesModel>> GetLikes(int postId) => await _dataContext.Likes.Where(like => like.PostId == postId).ToListAsync();
+        public async Task<List<CommentsModel>> GetComments(int postId) => await _dataContext.Comments.Where(comment => comment.PostId == postId).ToListAsync();
 
     }
 }
